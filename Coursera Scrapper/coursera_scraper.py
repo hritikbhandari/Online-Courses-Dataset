@@ -1,18 +1,19 @@
-import urllib.request
-import requests
-import bs4
-import os
-import time
-import warnings
-
 import pandas as pd
 import numpy as np
 
-from multiprocessing import Pool
+
+import urllib.request
+import requests
 from bs4 import BeautifulSoup
+import os
+import time
+
+
+from multiprocessing import Pool
 from selenium import webdriver
 
-def scraper(page):
+
+def web_scraping(page):
     lst_name = []
     lst_link = []
 
@@ -40,26 +41,27 @@ if __name__ == '__main__':
     choke = np.arange(1, 115, 10)[:-1]
     lst_name = []
     lst_link = []
-    data_main = {'Name': lst_name, 'Link':lst_link}
+    dataset = {'Name': lst_name, 'Link':lst_link}
     for i in choke:
         
         p = Pool(10)
-        data = p.map(scraper, range(i, i+10))
+        data = p.map(web_scraping, range(i, i+10))
         p.terminate()
         p.join()
         
         lst_name = []
         lst_link = []
-        _data = {'Name': lst_name, 'Link':lst_link}
+        scraped_data = {'Name': lst_name, 'Link':lst_link}
         for d in data:
-            _data['Name'] += d['Name']
-            _data['Link'] += d['Link']
+            scraped_data['Name'] += d['Name']
+            scraped_data['Link'] += d['Link']
         
-        data_main['Name'] += _data['Name']
-        data_main['Link'] += _data['Link']
+        dataset['Name'] += scraped_data['Name']
+        dataset['Link'] += scraped_data['Link']
 
-    print(data_main)
+
     end = time.time()
-    print(str(len(data_main['Name'])) + ' items in ' + str(end-start) + ' seconds')
 
-    pd.DataFrame(data=data_main).to_csv('coursera-course-data.csv')
+    
+
+    pd.DataFrame(data=dataset).to_csv('coursera-courses-data.csv')
