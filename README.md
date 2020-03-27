@@ -1,2 +1,2 @@
 # MOOCs-Web-Scrapper
-This is a web scrapper to extract the course details from various websites like Coursera, edX, Udemy, DataCamp and prepare a dataset which can be worked upon for various purposes.
+This is a web scrapping project to extract the course details from various online course providing websites like Coursera, edX, Udemy, DataCamp. The dataset generated is to be used to work on Find-my-course [ an onlines courses directory and recommendation project ].
